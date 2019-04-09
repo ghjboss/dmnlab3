@@ -47,9 +47,6 @@
   <dmn:inputData id="_9C5AA79B-8558-48D9-8E94-FA68854E1EB4" name="incoming call">
     <dmn:variable id="_0DD88DA1-DBCB-4CAE-B112-9793E0CF834C" name="incoming call" typeRef="tCall"/>
   </dmn:inputData>
-  <dmn:inputData id="_CE95DEFE-C22B-4FEA-AFAF-2C834F9327CF" name="office">
-    <dmn:variable id="_99E91ED6-BBBE-4A88-9233-74C674A0B8F9" name="office" typeRef="tOffice"/>
-  </dmn:inputData>
   <dmn:decisionService id="_590F4062-1DE3-45AA-8E16-DABB2034B101" name="Can Handle Call">
     <dmn:variable id="_4AECBA6B-490E-439C-8553-4988A01DB5BF" name="Can Handle Call" typeRef="boolean"/>
     <dmn:outputDecision href="#_8415FD08-EA37-4DD2-9DB8-333D1D57CB98"/>
@@ -58,6 +55,9 @@
     <dmn:encapsulatedDecision href="#_DAD733B1-50B1-4B92-A3FE-E258D9A19DCF"/>
     <dmn:inputData href="#_C2D8054A-34BE-4D7E-9BB0-763F55D62A8B"/>
   </dmn:decisionService>
+  <dmn:inputData id="_CE95DEFE-C22B-4FEA-AFAF-2C834F9327CF" name="office">
+    <dmn:variable id="_99E91ED6-BBBE-4A88-9233-74C674A0B8F9" name="office" typeRef="tOffice"/>
+  </dmn:inputData>
   <dmn:decision id="_8415FD08-EA37-4DD2-9DB8-333D1D57CB98" name="Call Can Be Handled">
     <dmn:variable id="_A0D15D90-F221-4036-AF1C-D130F2A58ACD" name="Call Can Be Handled" typeRef="boolean"/>
     <dmn:informationRequirement id="_DDFA5272-0124-4341-97D7-70B4B45DA272">
@@ -170,6 +170,29 @@
       <dmn:text>list contains(Banned Phone Numbers, call.phone)</dmn:text>
     </dmn:literalExpression>
   </dmn:decision>
+  <dmn:decision id="_DAD733B1-50B1-4B92-A3FE-E258D9A19DCF" name="Banned Phone Numbers">
+    <dmn:variable id="_DF04255C-B736-4C08-8703-E34DD4255E0E" name="Banned Phone Numbers" typeRef="tPhoneNumbers"/>
+    <dmn:relation id="_59405420-1091-4BBD-A126-294F7B96F811">
+      <dmn:column id="_FB4A1D74-2AD0-4F82-A666-03C14C9C62C3" name="country prefix" typeRef="string"/>
+      <dmn:column id="_75FE8C1D-6D19-4C84-B7FF-0AACE728A7B7" name="phone number" typeRef="string"/>
+      <dmn:row id="_197ABA1D-7253-4507-9668-2A332DDCF420">
+        <dmn:literalExpression id="_5735F400-4B00-42C7-8110-332A7F30580E">
+          <dmn:text>"+420"</dmn:text>
+        </dmn:literalExpression>
+        <dmn:literalExpression id="_3BFCCF80-2484-4BEF-A00B-FF2596BAA60D">
+          <dmn:text>"602000002"</dmn:text>
+        </dmn:literalExpression>
+      </dmn:row>
+      <dmn:row id="_82B7B3F5-C535-4627-9831-9086EF393801">
+        <dmn:literalExpression id="_61A8F64A-5C43-42C3-844F-4B6AE90EAFE5">
+          <dmn:text>"+421"</dmn:text>
+        </dmn:literalExpression>
+        <dmn:literalExpression id="_64EC669D-703E-42F5-B446-252FEDDE8E1C">
+          <dmn:text>"92000001"</dmn:text>
+        </dmn:literalExpression>
+      </dmn:row>
+    </dmn:relation>
+  </dmn:decision>
   <dmn:decision id="_8DCFF5D5-45C2-4BB3-A367-FC1C8544DAA0" name="Call Purpose Accepted">
     <dmn:variable id="_17924CBF-26F2-4D9C-959F-68688956E954" name="Call Purpose Accepted" typeRef="boolean"/>
     <dmn:informationRequirement id="_562C2ADE-8FB6-4E88-9A27-0F28568EF6D3">
@@ -199,29 +222,6 @@
         </dmn:outputEntry>
       </dmn:rule>
     </dmn:decisionTable>
-  </dmn:decision>
-  <dmn:decision id="_DAD733B1-50B1-4B92-A3FE-E258D9A19DCF" name="Banned Phone Numbers">
-    <dmn:variable id="_DF04255C-B736-4C08-8703-E34DD4255E0E" name="Banned Phone Numbers" typeRef="tPhoneNumbers"/>
-    <dmn:relation id="_59405420-1091-4BBD-A126-294F7B96F811">
-      <dmn:column id="_FB4A1D74-2AD0-4F82-A666-03C14C9C62C3" name="country prefix" typeRef="string"/>
-      <dmn:column id="_75FE8C1D-6D19-4C84-B7FF-0AACE728A7B7" name="phone number" typeRef="string"/>
-      <dmn:row id="_197ABA1D-7253-4507-9668-2A332DDCF420">
-        <dmn:literalExpression id="_5735F400-4B00-42C7-8110-332A7F30580E">
-          <dmn:text>"+420"</dmn:text>
-        </dmn:literalExpression>
-        <dmn:literalExpression id="_3BFCCF80-2484-4BEF-A00B-FF2596BAA60D">
-          <dmn:text>"602000002"</dmn:text>
-        </dmn:literalExpression>
-      </dmn:row>
-      <dmn:row id="_82B7B3F5-C535-4627-9831-9086EF393801">
-        <dmn:literalExpression id="_61A8F64A-5C43-42C3-844F-4B6AE90EAFE5">
-          <dmn:text>"+421"</dmn:text>
-        </dmn:literalExpression>
-        <dmn:literalExpression id="_64EC669D-703E-42F5-B446-252FEDDE8E1C">
-          <dmn:text>"92000001"</dmn:text>
-        </dmn:literalExpression>
-      </dmn:row>
-    </dmn:relation>
   </dmn:decision>
   <dmndi:DMNDI>
     <dmndi:DMNDiagram>
@@ -257,12 +257,6 @@
           <kie:ComponentWidths dmnElementRef="_EE8287AA-9E54-4A73-B2AD-C007C8551353">
             <kie:width>402.0</kie:width>
           </kie:ComponentWidths>
-          <kie:ComponentWidths dmnElementRef="_EBCA550A-730A-4912-843F-AB5C21F8A3AC">
-            <kie:width>50.0</kie:width>
-            <kie:width>100.0</kie:width>
-            <kie:width>184.0</kie:width>
-            <kie:width>100.0</kie:width>
-          </kie:ComponentWidths>
           <kie:ComponentWidths dmnElementRef="_59405420-1091-4BBD-A126-294F7B96F811">
             <kie:width>50.0</kie:width>
             <kie:width>100.0</kie:width>
@@ -272,6 +266,12 @@
           <kie:ComponentWidths dmnElementRef="_3BFCCF80-2484-4BEF-A00B-FF2596BAA60D"/>
           <kie:ComponentWidths dmnElementRef="_61A8F64A-5C43-42C3-844F-4B6AE90EAFE5"/>
           <kie:ComponentWidths dmnElementRef="_64EC669D-703E-42F5-B446-252FEDDE8E1C"/>
+          <kie:ComponentWidths dmnElementRef="_EBCA550A-730A-4912-843F-AB5C21F8A3AC">
+            <kie:width>50.0</kie:width>
+            <kie:width>100.0</kie:width>
+            <kie:width>184.0</kie:width>
+            <kie:width>100.0</kie:width>
+          </kie:ComponentWidths>
         </kie:ComponentsWidthsExtension>
       </di:extension>
       <dmndi:DMNShape id="dmnshape-_C2D8054A-34BE-4D7E-9BB0-763F55D62A8B" dmnElementRef="_C2D8054A-34BE-4D7E-9BB0-763F55D62A8B" isCollapsed="false">
@@ -292,15 +292,6 @@
         <dc:Bounds x="737" y="330" width="100" height="50"/>
         <dmndi:DMNLabel/>
       </dmndi:DMNShape>
-      <dmndi:DMNShape id="dmnshape-_CE95DEFE-C22B-4FEA-AFAF-2C834F9327CF" dmnElementRef="_CE95DEFE-C22B-4FEA-AFAF-2C834F9327CF" isCollapsed="false">
-        <dmndi:DMNStyle>
-          <dmndi:FillColor red="255" green="255" blue="255"/>
-          <dmndi:StrokeColor red="0" green="0" blue="0"/>
-          <dmndi:FontColor red="0" green="0" blue="0"/>
-        </dmndi:DMNStyle>
-        <dc:Bounds x="872" y="330" width="100" height="50"/>
-        <dmndi:DMNLabel/>
-      </dmndi:DMNShape>
       <dmndi:DMNShape id="dmnshape-_590F4062-1DE3-45AA-8E16-DABB2034B101" dmnElementRef="_590F4062-1DE3-45AA-8E16-DABB2034B101" isCollapsed="false">
         <dmndi:DMNStyle>
           <dmndi:FillColor red="255" green="255" blue="255"/>
@@ -313,6 +304,15 @@
           <di:waypoint x="96" y="188.5"/>
           <di:waypoint x="596" y="188.5"/>
         </dmndi:DMNDecisionServiceDividerLine>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_CE95DEFE-C22B-4FEA-AFAF-2C834F9327CF" dmnElementRef="_CE95DEFE-C22B-4FEA-AFAF-2C834F9327CF" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="872" y="330" width="100" height="50"/>
+        <dmndi:DMNLabel/>
       </dmndi:DMNShape>
       <dmndi:DMNShape id="dmnshape-_8415FD08-EA37-4DD2-9DB8-333D1D57CB98" dmnElementRef="_8415FD08-EA37-4DD2-9DB8-333D1D57CB98" isCollapsed="false">
         <dmndi:DMNStyle>
@@ -350,15 +350,6 @@
         <dc:Bounds x="296" y="257" width="100" height="50"/>
         <dmndi:DMNLabel/>
       </dmndi:DMNShape>
-      <dmndi:DMNShape id="dmnshape-_8DCFF5D5-45C2-4BB3-A367-FC1C8544DAA0" dmnElementRef="_8DCFF5D5-45C2-4BB3-A367-FC1C8544DAA0" isCollapsed="false">
-        <dmndi:DMNStyle>
-          <dmndi:FillColor red="255" green="255" blue="255"/>
-          <dmndi:StrokeColor red="0" green="0" blue="0"/>
-          <dmndi:FontColor red="0" green="0" blue="0"/>
-        </dmndi:DMNStyle>
-        <dc:Bounds x="468" y="257" width="100" height="50"/>
-        <dmndi:DMNLabel/>
-      </dmndi:DMNShape>
       <dmndi:DMNShape id="dmnshape-_DAD733B1-50B1-4B92-A3FE-E258D9A19DCF" dmnElementRef="_DAD733B1-50B1-4B92-A3FE-E258D9A19DCF" isCollapsed="false">
         <dmndi:DMNStyle>
           <dmndi:FillColor red="255" green="255" blue="255"/>
@@ -366,6 +357,15 @@
           <dmndi:FontColor red="0" green="0" blue="0"/>
         </dmndi:DMNStyle>
         <dc:Bounds x="124" y="257" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_8DCFF5D5-45C2-4BB3-A367-FC1C8544DAA0" dmnElementRef="_8DCFF5D5-45C2-4BB3-A367-FC1C8544DAA0" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="468" y="257" width="100" height="50"/>
         <dmndi:DMNLabel/>
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="dmnedge-_DDFA5272-0124-4341-97D7-70B4B45DA272" dmnElementRef="_DDFA5272-0124-4341-97D7-70B4B45DA272">
